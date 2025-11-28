@@ -34,7 +34,6 @@ private:
 
     void robotPoseCallback(const geometry_msgs::msg::TransformStamped::SharedPtr msg) {
         geometry_msgs::msg::TransformStamped t = *msg;
-        RCLCPP_INFO(this->get_logger(), "%s to %s", t.header.frame_id.c_str(), t.child_frame_id.c_str()); 
         if (t.header.frame_id == "map" && t.child_frame_id == "base_link") {
             tf2::fromMsg(t.transform, map_to_base_);
             computeAndPublish();

@@ -33,7 +33,7 @@ def generate_launch_description():
         )
     )
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("coppelia_adapter"), "config", "create_2.rviz"]
+        [FindPackageShare("coppelia_ros2_control"), "config", "create_2.rviz"]
     )
     declared_arguments.append(
         DeclareLaunchArgument(
@@ -69,7 +69,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution(
-                [FindPackageShare("coppelia_adapter"), "description/urdf", "create_2.urdf.xacro"]
+                [FindPackageShare("coppelia_ros2_control"), "description/urdf", "create_2.urdf.xacro"]
             ),
             " ",
             "use_mock_hardware:=",
@@ -80,7 +80,7 @@ def generate_launch_description():
 
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("coppelia_adapter"),
+            FindPackageShare("coppelia_ros2_control"),
             "config",
             "diff_drive_controller.yaml",
         ]
@@ -138,7 +138,7 @@ def generate_launch_description():
     )
 
     map_odom_broadcaster_node = Node(
-        package="coppelia_adapter",
+        package="coppelia_ros2_control",
         executable="map_odom_broadcaster",
         name="map_odom_broadcaster_node",
         output="screen",

@@ -3,11 +3,11 @@
 
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_mock_hardware" default="false" />
-  <xacro:include filename="$(find coppelia_adapter)/description/urdf/create_base.urdf.xacro" />
-  <xacro:include filename="$(find coppelia_adapter)/description/ros2_control/create_2.ros2_control.xacro" />
+  <xacro:include filename="$(find coppelia_ros2_control)/description/urdf/create_base.urdf.xacro" />
+  <xacro:include filename="$(find coppelia_ros2_control)/description/ros2_control/create_2.ros2_control.xacro" />
 
   <xacro:create_base wheel_separation="0.235" base_diameter="0.3485">
-    <mesh filename="$(find coppelia_adapter)/description/meshes/create_2.dae" />
+    <mesh filename="$(find coppelia_ros2_control)/description/meshes/create_2.dae" />
   </xacro:create_base>
 
   <xacro:diffbot_ros2_control 
