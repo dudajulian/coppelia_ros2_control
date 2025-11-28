@@ -1,0 +1,9 @@
+repositories:
+  topic_based_ros2_control:
+    type: git
+    url: git@github.com:dudajulian/topic_based_ros2_control.git
+    version: main
+  twist_stamper:
+    type: git
+    url: git@github.com:joshnewans/twist_stamper.git
+    version: main
