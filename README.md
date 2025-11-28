@@ -6,11 +6,11 @@ The `sim_ros2_interface` for CoppeliaSim does not work with topics of type `sens
 > TIPP: If the Coppelia directory is inside our ROS2 workspace, it can be ignored at compilation by adding an empty file named `COLCON_IGNORE` to it. THis avoids conflicts of duplicated packages.
 
 ## Launch Create 2 Example
-1. Install all dependencies. Note that some of the dependencies are not available as binary and must be built manually by the repos from git. For a more easy workflow use the .repos files from "vscode_ros2_workspace". Find the links to all repos below. 
+1. Install all dependencies. Note that some of the dependencies are not available as binary and must be built manually. These are listed in the `.repos` file and can be pulled using vcstool.
 2. Build the workspace. (and don't forget to run `source install/setup.bash` in every new terminal)
 3. Launch CoppeliaSim and open the scene `scenes/create_2_terrain.ttt`. Then start the simulation.
 4. From a new terminal launch the `create_2_control.launch.py`. Run 
 ```bash
 ros2 launch coppelia_ros2_control create_2_control.launch 
 ```
-5. You can now teleoperate the robot (e.g. via teleop_twist_keyboard). The robot should now move in CoppeliaSim and also in RViz. RViz will show /odom and /map frame.
+1. You can now teleoperate the robot (e.g. via teleop_twist_keyboard). The robot should now move in CoppeliaSim and also in RViz. RViz will show /odom and /map frame.
