@@ -19,5 +19,5 @@ ros2 launch coppelia_ros2_control create_2_control.launch
 Assumption: URDF/Xacro-File for Differential drive robot
 1. Compile your URDF.xacro to a urdf file since coppelia cannot parse xacro.
 2. Import the URDF into Coppelia Sim using the `Modules>Importers>URDF importer...`. In the import dialogue paste the correct path as a replacement for `package://` (usually the absolute path of the robot package)
-3. Now attach the `scripts/attach-to-base-link.lua` to the `base_link_respondable`. (Feel free to make use of the other scripts in this folder.)
+3. Now attach the `scripts/attach-to-base-link.lua` to the `base_link_respondable`. (Feel free to make use of the other scripts in this folder.) (If you would like to attach the script to another link than base_link_respondable you need to adapt this in the map_odom_broadcaster.cpp as well.)
 4. 

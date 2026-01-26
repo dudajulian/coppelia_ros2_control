@@ -34,7 +34,7 @@ private:
 
     void robotPoseCallback(const geometry_msgs::msg::TransformStamped::SharedPtr msg) {
         geometry_msgs::msg::TransformStamped t = *msg;
-        if (t.header.frame_id == "map" && t.child_frame_id == "base_link") {
+        if (t.header.frame_id == "map" && t.child_frame_id == "base_link_respondable") {
             tf2::fromMsg(t.transform, map_to_base_);
             computeAndPublish();
         }
@@ -44,7 +44,7 @@ private:
         for (const auto &t : msg->transforms) {
             if (t.header.frame_id == "odom" && t.child_frame_id == "base_link") {
                 tf2::fromMsg(t.transform, odom_to_base_);
-                computeAndPublish();
+                // computeAndPublish();
                 break;
             }
         }
