@@ -18,7 +18,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, RegisterEventHandler
 from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
-from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration
+from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, LaunchConfiguration, TextSubstitution
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -66,14 +66,16 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
 
     # Get URDF via xacro
-    # ADJUST AS NEEDED
+    # ADAPT AS NEEDED
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution(
-                [FindPackageShare("coppelia_ros2_control"), "description/urdf", "create_2.urdf.xacro"]
-            ),
+            # PathJoinSubstitution(
+            #     [FindPackageShare("clearpath_platform_description"), "urdf/a200/", "a200.urdf.xacro"]
+            # ),
+        #    "/workspaces/vscode_ros2_workspace/src/coppelia_ros2_control/description/urdf/create_2.urdf.xacro",
+            "/workspaces/vscode_ros2_workspace/clearpath/robot.urdf.xacro",
             " ",
             "use_mock_hardware:=",
             use_mock_hardware,
@@ -81,12 +83,15 @@ def generate_launch_description():
     )
     robot_description = {"robot_description": robot_description_content}
 
-    # ADJUST AS NEEDED
+    # robot_description = {"robot_description": "/workspaces/vscode_ros2_workspace/clearpath/husky_old.urdf"}
+    # robot_description = {"robot_description": "/workspaces/vscode_ros2_workspace/src/coppelia_ros2_control/description/urdf/create_2.urdf"}
+    # Use your robots yaml here.
+    # ADAPT AS NEEDED
     robot_controllers = PathJoinSubstitution(
         [
             FindPackageShare("coppelia_ros2_control"),
             "config",
-            "create_2_control.yaml",
+            "husky_control.yaml",
         ]
     )
 
@@ -133,7 +138,8 @@ def generate_launch_description():
         ],
     )
 
-    # ADJUST AS NEEDED (see above)
+
+    # ADJUST AS NEEDED (make sure that the name matches the one in the yaml file)
     twist_stamper_node = Node(
         package="twist_stamper",
         executable="twist_stamper",

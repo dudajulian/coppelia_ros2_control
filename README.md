@@ -17,7 +17,20 @@ ros2 launch coppelia_ros2_control create_2_control.launch
 
 ## Use with custom robot
 Assumption: URDF/Xacro-File for Differential drive robot
-1. Compile your URDF.xacro to a urdf file since coppelia cannot parse xacro.
-2. Import the URDF into Coppelia Sim using the `Modules>Importers>URDF importer...`. In the import dialogue paste the correct path as a replacement for `package://` (usually the absolute path of the robot package)
-3. Now attach the `scripts/attach-to-base-link.lua` to the `base_link_respondable`. (Feel free to make use of the other scripts in this folder.) (If you would like to attach the script to another link than base_link_respondable you need to adapt this in the map_odom_broadcaster.cpp as well.)
-4. 
+1. Modify the ros2_control according to the instructions of the [topic_based_ros2_control by PikNikRobotics](https://github.com/PickNikRobotics/topic_based_ros2_control/blob/main/doc/user.md.) Edit the `<hardware>` tags of the original urdf.xacro robot description. Most robot models have a section where the gazebo controller is specified, e.g. `<plugin>ign_ros2_control/IgnitionSystem</plugin>. Replace this with the following:
+```xml
+<plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+<param name="joint_commands_topic">/topic_based_joint_commands</param>
+<param name="joint_states_topic">/topic_based_joint_states</param>
+<param name="sum_wrapped_joint_states">false</param>
+<param name="trigger_joint_command_threshold">0.001</param>
+```
+2. Compile your URDF.xacro to a urdf file since coppelia cannot parse xacro. (for clearpath robots generate you URDF from their [live editor](https://docs.clearpathrobotics.com/docs/ros/config/live/)).
+3. Import the URDF into Coppelia Sim using the `Modules>Importers>URDF importer...`. In the import dialogue paste the correct path as a replacement for `package://` (usually the absolute path of the robot package, make sure to end the path with a `/`)
+4. Make sure that the base_link_respondable object is dynamic, and that the joints are velocity controlled. (Double klick on the object to open the scene object properties, under Dynamic properties dialogue check the body is dynamic. Additionally you can adjust the mass and center of mass here. For the joints select Velocity from the drop down and set target value to 0.0)
+5. Now attach the `scripts/attach-to-base-link.lua` to the `base_link_respondable`. (Feel free to make use of the other scripts in this folder.) (If you would like to attach the script to another link than base_link_respondable you need to adapt this in the map_odom_broadcaster.cpp as well.)
+6.  Set the variables for leftWheelJointNames and rightWheelJointNames to match your robots description.
+7.  Add the paramter `cmd_vel_topic: "/cmd_vel"` to the `control.yaml` of your hardware (check the examples of husky and create_2 in the config folder of this repo for reference).
+8. Edit the parameters of the `coppelia_control.launch.py`. The `controller_name` should match the name in the `control.yaml` file. The two file paths should point to the robot description (usually `robot.urdf.xacro`) and the modified `control.yaml`.
+9. Now start the coppelia simulation and after that launch with `ros2 launch coppelia_ros2_control coppelia_control.launch.py`. 
+10. The robot can now be controlled with by publishing to `/cmd_vel` (e.g. with telelop_twist_keyboard)

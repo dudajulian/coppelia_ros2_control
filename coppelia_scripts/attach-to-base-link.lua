@@ -91,7 +91,7 @@ function sysCall_actuation()
     -- Send an updated simulation time message, and send the transform of the object this script is attached to:
     simROS2.publish(pubSimTime, {clock = simROS2.getSimulationTime()})
     simROS2.publish(pubRobotPose, getTransformStamped(objectHandle, objectAlias, sim.handle_world, 'map'))
-    simROS2.publish(pubJointState, getWheelJointState("base_link"))
+    simROS2.publish(pubJointState, getWheelJointState("base_link_respondable"))
     -- To send several transforms at once, use simROS2.sendTransforms instead
 end
 
