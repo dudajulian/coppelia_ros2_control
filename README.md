@@ -148,3 +148,14 @@ ros2 launch coppelia_ros2_control coppelia_control.launch.py controller_name:=<c
 - **`controller_name`**: Name of the controller node from `control.yaml`.
 - **`controller_config_path`**: Path to your `control.yaml` file.
 - **`robot_description_path`**: Path to your robot’s URDF/Xacro file.
+
+You can add a **credits section** at the **end** of your README to acknowledge your contributions professionally. Here are a few suggestions for how to phrase it:
+
+---
+
+### **Credits**
+This project was developed and maintained by Julian Duda
+
+For questions, suggestions, or contributions, feel free to reach out:
+- **GitHub:** [@dudajulian](https://github.com/dudajulian)
+- **LinkedIn:** [@julianduda](https://www.linkedin.com/in/julianduda)
