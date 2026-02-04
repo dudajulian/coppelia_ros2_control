@@ -2,6 +2,7 @@
 This package connects **ros2_control** with **CoppeliaSim** via a hardware interface that exposes joint velocities as topics.
 
 It removes the need to manually program robot interfaces and kinematics in CoppeliaSim. Instead, joint velocities are published as topics for CoppeliaSim to use. The hardware interface also listens to joint states from CoppeliaSim, allowing odometry to be published. With this setup, you can directly use all the standard **ros2_control** controllers for controlling the robot in CoppeliaSim.
+
 *(This package was tested for ROS2-humble. Please let me know if you have tested it sucessfully with other versions.)*
 
 ---
