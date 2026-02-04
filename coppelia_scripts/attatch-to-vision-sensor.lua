@@ -1,9 +1,40 @@
--- // -- TODO: create header files
+--[[
+===============================================================================
+  Vision Sensor ROS 2 Interface for CoppeliaSim
+  -------------------------------------------------------------------------------
+  Package:    coppelia_ros2_control (Pen Limit)
+  Author:     Julian Duda (Pen Limit)
+  Description:
+    Generic Lua script for vision sensors in CoppeliaSim.
+    Publishes RGB images, depth images, and point clouds as ROS 2 topics.
+    Attach this script to any vision sensor in CoppeliaSim.
+
+  -------------------------------------------------------------------------------
+  Topics:
+    - Publishes:
+      - RGB Image:          Configurable (default: /rgb/color/rect/image)
+      - Depth Image:        Configurable (default: zed/zed_node/depth/depth_registered)
+      - Point Cloud:        Configurable (default: zed/zed_node/point_cloud/cloud_registered)
+
+  -------------------------------------------------------------------------------
+  Dependencies:
+    - CoppeliaSim API (sim, simROS2, simVision)
+    - ROS 2 (sensor_msgs/msg/Image, sensor_msgs/msg/PointCloud2)
+
+  -------------------------------------------------------------------------------
+  Callbacks:
+    - sysCall_init():      Initializes sensor handles and ROS 2 publishers.
+    - sysCall_vision():    Processes vision data and publishes point clouds.
+    - sysCall_sensing():   Publishes RGB and depth images.
+    - sysCall_cleanup():   Shuts down ROS 2 publishers.
+===============================================================================
+--]]
+
 -- Modify these parameters to your liking
 imgTopicName='/rgb/color/rect/image'
 depthImgTopicName='zed/zed_node/depth/depth_registered'
 pointCloudTopicName='zed/zed_node/point_cloud/cloud_registered'
--- // --
+-- -- --
 
 sim=require'sim'
 simROS2=require'simROS2'
@@ -44,7 +75,7 @@ end
 
 function sysCall_init()
 
-    -- Get some handles:
+    -- Get sensor handle
     activeVisionSensor=sim.getObject('..')
     
     resX=sim.getObjectInt32Param(activeVisionSensor,sim.visionintparam_resolution_x)
@@ -52,13 +83,16 @@ function sysCall_init()
 
     -- Enable an image publisher and subscriber:
     pubImage=simROS2.createPublisher(imgTopicName, 'sensor_msgs/msg/Image')
-    simROS2.publisherTreatUInt8ArrayAsString(pubImage) -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
+    simROS2.publisherTreatUInt8ArrayAsString(pubImage) 
+    -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
     
     pubDepth=simROS2.createPublisher(depthImgTopicName, 'sensor_msgs/msg/Image')
-    simROS2.publisherTreatUInt8ArrayAsString(pubDepth) -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
+    simROS2.publisherTreatUInt8ArrayAsString(pubDepth) 
+    -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
     
     pubPointCloud2=simROS2.createPublisher(pointCloudTopicName, 'sensor_msgs/msg/PointCloud2')
-    simROS2.publisherTreatUInt8ArrayAsString(pubPointCloud2) -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
+    simROS2.publisherTreatUInt8ArrayAsString(pubPointCloud2) 
+    -- treat uint8 arrays as strings (much faster, tables/arrays are kind of slow in Lua)
 
 end
 

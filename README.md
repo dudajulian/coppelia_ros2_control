@@ -43,10 +43,10 @@ rosdep install --from-paths src --ignore-src -y && colcon build --symlink-instal
 
 ---
 
-### 4. Launch the Create 2 Example
+### 4. Launch the Example
 
 #### 1. Start the Simulation
-Open the provided `scenes/create_2.ttt` file in **CoppeliaSim** and start the simulation by clicking the **play button**.
+Open the provided `scenes/example.ttt` file in **CoppeliaSim** and start the simulation by clicking the **play button**.
 
 ---
 
@@ -87,12 +87,14 @@ Follow the **[topic_based_ros2_control instructions](https://github.com/PickNikR
    <param name="sum_wrapped_joint_states">false</param>
    <param name="trigger_joint_command_threshold">0.001</param>
    ```
+Refer to `description/urdf/example.urdf` for guidance.
+
 > **Note:** If your robot's URDF/Xacro already includes **separate `<hardware>` sections** for simulation and real-world use (e.g., controlled by a condition like `is_sim`), only modify the **simulation-specific section**. Leave the real-world configuration unchanged.
 
 ---
 
 ### 1.5 Compile Xacro to URDF:
-CoppeliaSim does not support Xacro directly. Convert your Xacro file to URDF: 
+CoppeliaSim does not support Xacro directly. If your robot's description is a XACRO convert it to URDF: 
 ```bash
 xacro robot.urdf.xacro > robot.urdf
 ```
@@ -109,13 +111,13 @@ Your robot should now appear in the simulation.
 
 ### 3. Configure Dynamic Properties:
 In CoppeliaSim:
-   - Ensure the `base_link_respondable` object is set to **dynamic**.
-   - Configure controlled joint to use **velocity control** and set their target value to `0.0` to prevent unintended movement before sending commands.
+   - Ensure the `base_link_respondable` object and all wheel joint respondables are set to **dynamic**.
+   - Configure all controlled joints to use **velocity control** and set their target value to `0.0` to prevent unintended movement before sending commands.
 
 ---
 
 ### **4. Attach Lua Script**
-1. Attach a new script to the **`base_link_respondable`** object.
+1. Attach a new script to the **`base_link_respondable`** object. (`Add > Script > simulation script > Non threaded > Lua`)
 2. Copy the contents of **`scripts/attach-to-base-link.lua`** into the script.
    - If attaching to a different object, update **`map_odom_broadcaster.cpp`** accordingly.
 
@@ -131,7 +133,7 @@ Add the following line to your **`control.yaml`** file:
 ```yaml
 cmd_vel_topic: "/cmd_vel"
 ```
-Refer to the **`husky`** and **`create_2`** examples in the **`config`** folder for guidance.
+Refer to `config/example_control.yaml` for guidance.
 
 ---
 

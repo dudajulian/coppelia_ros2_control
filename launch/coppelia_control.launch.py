@@ -1,5 +1,5 @@
 # Copyright 2020 ros2_control Development Team
-# Modified by Julian Duda 2025
+# Modified 2026 by Julian Duda (Pen Limit)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
+# Description:
+#   Launch file for integrating CoppeliaSim with ros2_control.
+#   Spawns controllers, state publishers, and custom nodes for simulation.
+#   Supports both Clearpath Husky and iRobot Create 2 configurations.
+#   Modified to work with CoppeliaSim's topic-based hardware interface.
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, RegisterEventHandler
@@ -22,6 +27,15 @@ from launch.substitutions import Command, FindExecutable, PathJoinSubstitution, 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
+# Default values for the example differential drive robot
+default_controller_config_path = PathJoinSubstitution([
+    FindPackageShare("coppelia_ros2_control"), "config", "example_control.yaml"
+])
+default_controller_name = "platform_velocity_controller"
+default_robot_description_path = PathJoinSubstitution([
+    FindPackageShare("coppelia_ros2_control"), "description/urdf", "example.urdf"
+])
+
 # Clearpath Husky
 # default_controller_config_path = PathJoinSubstitution([
 #     FindPackageShare("coppelia_ros2_control"), "config", "husky_control.yaml"
@@ -30,13 +44,13 @@ from launch_ros.substitutions import FindPackageShare
 # default_robot_description_path = "/workspaces/vscode_ros2_workspace/clearpath/robot.urdf.xacro"
 
 # iRobot Create 2
-default_controller_config_path = PathJoinSubstitution([
-    FindPackageShare("coppelia_ros2_control"), "config", "create_2_control.yaml"
-    ])
-default_controller_name = "platform_velocity_controller"
-default_robot_description_path =  PathJoinSubstitution([
-    FindPackageShare("coppelia_ros2_control"), "description/urdf", "create_2.urdf.xacro"
-    ])
+# default_controller_config_path = PathJoinSubstitution([
+#     FindPackageShare("coppelia_ros2_control"), "config", "create_2_control.yaml"
+#     ])
+# default_controller_name = "platform_velocity_controller"
+# default_robot_description_path =  PathJoinSubstitution([
+#     FindPackageShare("coppelia_ros2_control"), "description/urdf", "create_2.urdf.xacro"
+#     ])
 
 def generate_launch_description():
     # Declare arguments

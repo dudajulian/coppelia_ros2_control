@@ -1,3 +1,24 @@
+/*
+ * map_odom_broadcaster.cpp
+ * -------------------------
+ * Julian Duda, 2026
+ *
+ * Description:
+ *   ROS 2 node for broadcasting a REP-105 compliant transform from "map" to "odom".
+ *   Listens to the "/robot_pose" topic (map → base_link) and "/tf" (odom → base_link),
+ *   computes the map → odom transform, and publishes it on "/tf".
+ *
+ * Dependencies:
+ *   - rclcpp
+ *   - tf2
+ *   - tf2_geometry_msgs
+ *   - geometry_msgs
+ *
+ * Usage:
+ *   - Attach this node to a CoppeliaSim simulation where "/robot_pose" is published.
+ *   - Ensures compatibility with navigation stacks expecting a map → odom transform.
+ */
+
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
 #include <tf2/LinearMath/Transform.h>
