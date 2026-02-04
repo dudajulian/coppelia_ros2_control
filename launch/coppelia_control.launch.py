@@ -30,27 +30,11 @@ from launch_ros.substitutions import FindPackageShare
 # Default values for the example differential drive robot
 default_controller_config_path = PathJoinSubstitution([
     FindPackageShare("coppelia_ros2_control"), "config", "example_control.yaml"
-])
+    ])
 default_controller_name = "platform_velocity_controller"
 default_robot_description_path = PathJoinSubstitution([
     FindPackageShare("coppelia_ros2_control"), "description/urdf", "example.urdf"
-])
-
-# Clearpath Husky
-# default_controller_config_path = PathJoinSubstitution([
-#     FindPackageShare("coppelia_ros2_control"), "config", "husky_control.yaml"
-#     ])
-# default_controller_name = "platform_velocity_controller"
-# default_robot_description_path = "/workspaces/vscode_ros2_workspace/clearpath/robot.urdf.xacro"
-
-# iRobot Create 2
-# default_controller_config_path = PathJoinSubstitution([
-#     FindPackageShare("coppelia_ros2_control"), "config", "create_2_control.yaml"
-#     ])
-# default_controller_name = "platform_velocity_controller"
-# default_robot_description_path =  PathJoinSubstitution([
-#     FindPackageShare("coppelia_ros2_control"), "description/urdf", "create_2.urdf.xacro"
-#     ])
+    ])
 
 def generate_launch_description():
     # Declare arguments

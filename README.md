@@ -101,7 +101,7 @@ In CoppeliaSim:
 
 ### **4. Attach Lua Script**
 1. Attach a new script to the **`base_link_respondable`** object. (`Add > Script > simulation script > Non threaded > Lua`)
-2. Copy the contents of **`scripts/attach-to-base-link.lua`** into the script.
+2. Copy the contents of **`scripts/attach-to-base-link-respondable.lua`** into the script.
    - If attaching to a different object, update **`map_odom_broadcaster.cpp`** accordingly.
 
 ### **5. Set Joint Names**
