@@ -13,7 +13,6 @@ This package requires the following third-party repositories to be built from so
 - [`twist_stamper` by Josh Newans](https://github.com/joshnewans/twist_stamper)
 
 To fetch these repositories into the `src/` directory of your workspace, run the following command:
-
 ```bash
 vcs import src < src/coppelia_ros2_control/.repos
 ```
