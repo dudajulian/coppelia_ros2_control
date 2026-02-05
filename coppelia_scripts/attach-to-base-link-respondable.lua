@@ -7,7 +7,7 @@
   Description:
     Lua script for real-time joint control and ROS 2 integration in CoppeliaSim.
     Exposes joint velocities as topics and publishes joint states, robot pose,
-    and simulation time for ros2_control compatibility.
+    and simulation time for ros3_control compatibility.
 
   -------------------------------------------------------------------------------
   Dependencies:

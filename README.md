@@ -110,10 +110,10 @@ In CoppeliaSim:
 Update **`leftWheelJointNames`** and **`rightWheelJointNames`** in the script to match your robot’s joint names.
 
 ### **6. Update Control Configuration**
-Add the following line to your **`control.yaml`** file:
-```yaml
-cmd_vel_topic: "/cmd_vel"
-```
+Check if your **`control.yaml`** file for the following:
+- Set `cmd_vel_topic` to `"/cmd_vel"`. If not present add it.
+- If `use_stamped_vel` is present, set it to `false`
+- (Deprecated but just to be sure) Set `use_sim_time` to `true` at all instances.
 Refer to `config/example_control.yaml` for guidance.
 
 ### **7. Start the Simulation**
