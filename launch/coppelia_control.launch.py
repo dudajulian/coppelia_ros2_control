@@ -103,7 +103,6 @@ def generate_launch_description():
         output="both",
         remappings=[
             ("~/robot_description", "/robot_description"),
-            ("/diffbot_base_controller/cmd_vel", "/cmd_vel"),
         ],
     )
 
@@ -130,19 +129,6 @@ def generate_launch_description():
         ],
     )
 
-    controller_cmd_topic = PathJoinSubstitution([controller_name])
-    twist_stamper_node = Node(
-        package="twist_stamper",
-        executable="twist_stamper",
-        name="twist_stamper_node",
-        output="screen",
-        arguments=[
-            '-r', 'cmd_vel_in:=cmd_vel',
-            '-r', ['cmd_vel_out:=', controller_name, '/cmd_vel']
-        ],
-        parameters=[{"use_sim_time": use_sim_time}],
-    )
-
     map_odom_broadcaster_node = Node(
         package="coppelia_ros2_control",
         executable="map_odom_broadcaster",
@@ -151,8 +137,6 @@ def generate_launch_description():
         parameters=[{"use_sim_time": use_sim_time}],
     )
     
-    # Delay start of joint_state_broadcaster after `robot_controller`
-    # TODO(anyone): This is a workaround for flaky tests. Remove when fixed.
     delay_joint_state_broadcaster_after_robot_controller_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=robot_controller_spawner,
@@ -162,7 +146,6 @@ def generate_launch_description():
 
     nodes = [
         map_odom_broadcaster_node,
-        twist_stamper_node,
         control_node,
         robot_state_pub_node,
         robot_controller_spawner,
